@@ -1,0 +1,26 @@
+.calc-display{
+    background:
+    color:hsl(from color h s l)
+    border: 1px solid;
+}
+
+.calc-history{ 
+    min-height:1.2rem;
+    opacity: 0.75;
+    font-family:
+    overflow-x: auto;
+    white-space:nowrap;
+}
+
+.calc-main{
+    font-size: 2rem;
+    line-height: 1.2;
+    font-family: 
+    overflow-x:auto;
+    white-space: nowrap;
+}
+
+.calc-status{
+    min-height: 1.2rem;
+    opacity:0.85;
+}
