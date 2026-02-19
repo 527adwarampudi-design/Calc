@@ -1,3 +1,3 @@
-function pressNumber(digit){
+function pressNumber(digit) {
     console.log(digit)
 }
