@@ -12,7 +12,7 @@ let currentOperator = ''
 let historyParts = []
 
 //------------------------
-//HELPER FUCNTIONS
+//HELPER FUC1NTIONS
 //------------------------
 
 function setStatus (message) {
@@ -22,7 +22,7 @@ function setStatus (message) {
 function showSymbol (op) {
   if (op === '*') return '×'
   if (op === '/') return '÷'
-  if (op === '-') return '&#x2212'
+  if (op === '-') return '−'
   return op
 }
 
@@ -31,7 +31,31 @@ function updateScreen () {
   const history = document.getElementById('historyLine')
   const status = document.getElementById('statusLine')
 
-  display.textContent = typedNumberText
+  if (typedNumberText !== '') {
+    display.textContent = typedNumberText
+  } else {
+    display.textContent = '0'
+  }
+
+  if (historyParts.length === 0) {
+    history.textContent = ''
+  }
+  if (historyParts.length === 1) {
+    history.textContent = historyParts[0]
+  }
+  if (historyParts.length === 2) {
+    history.textContent = historyParts[0] + ' ' + showSymbol(historyParts[1])
+  }
+  if (historyParts.length === 3) {
+    history.textContent =
+      historyParts[0] +
+      ' ' +
+      showSymbol(historyParts[1]) +
+      ' ' +
+      historyParts[2]
+  }
+
+  if (status.textContent === '') status.textContent = 'Ready'
 }
 
 function pressNumber (digit) {
@@ -44,19 +68,45 @@ function pressNumber (digit) {
   updateScreen()
 }
 
-function pressOperator (operator) {
-    setStatus("")
-    console.log(operator)
-    if(typeNumberText=== "" && storedNumber === null){
-        setStatus("Type a number first.");
-    }
+function pressOperator (op) {
+  setStatus('')
+
+ // First operator press: store fisrt number 
+
+  if (typedNumberText === '' && storedNumber === null) {
+    setStatus('Type a number first.')
+    updateScreen()
+  }
+
+ 
+  if (storedNumber === null) {
+    storedNumber = Number(typedNumberText)
+    currentOperator = op
+    historyParts = [String(storedNumber), currentOperator]
+    typedNumberText = ''
+    updateScreen()
+  }
+
+   // if second number was typed, calculate immediately 
+  if (typedNumberText !== '') {
+  const  secondNumber = typedNumberText 
+  }
+//cant divide by zero 
+if (currentOperator === '/' && secondNumber ===0){
+  setStatus('we cnat divide by 0 dont do smtg wrong be right ')
+updateScreen()
+return
+}
 }
 
-if (storedNumber === null) {
-storedNumber = Number (typedNumberText)
-currentOperator = operator
-historyParts =String(storedNumber), currentOperator]
-typedNumberText = '';
-updateScreen();
+
+function clearAll () {
+  typedNumberText = ''
+  storedNumber= null
+  currentOperator = ''
+  historyParts=[]
+  
+  
+  setStatus ('cleared') 
+  updateScreen()
 }
-    }
