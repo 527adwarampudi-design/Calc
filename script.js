@@ -71,7 +71,7 @@ function pressNumber (digit) {
 function pressOperator (op) {
   setStatus('')
 
- // First operator press: store fisrt number 
+ // First operator press: store first number 
 
   if (typedNumberText === '' && storedNumber === null) {
     setStatus('Type a number first.')
@@ -93,10 +93,28 @@ function pressOperator (op) {
   }
 //cant divide by zero 
 if (currentOperator === '/' && secondNumber ===0){
-  setStatus('we cnat divide by 0 dont do smtg wrong be right ')
+  setStatus('we cant divide by 0 dont do something wrong be right ')
 updateScreen()
 return
 }
+
+let result = storedNumber
+  
+  if (currentOperator === '+') {
+    result = storedNumber + secondNumber  
+  } else if (currentOperator === '-'){
+    result = storedNumber - secondNumber
+  } else if (currentOperator === '*'){
+    result = storedNumber * secondNumber
+  } else if (currentOperator === '/'){
+    result = storedNumber / secondNumber
+  } 
+storedNumber = result
+currentOperator = op
+historyParts = [String(storedNumber), currentOperator]
+typedNumberText = ''
+updateScreen()
+return 
 }
 
 
@@ -110,3 +128,34 @@ function clearAll () {
   setStatus ('cleared') 
   updateScreen()
 }
+
+function calculate(){
+  setStatus('')
+  if (storedNumber === null || currentOperator === '' || typedNumberText === '') {
+    setStatus('Incomplete calculation.')
+    updateScreen()
+    return
+  }
+
+  const secondNumber = Number(typedNumberText)
+ 
+  historyParts = [String(storedNumber), currentOperator, String(secondNumber)]
+ 
+  let result = storedNumber
+  
+  if (currentOperator === '+') {
+    result = storedNumber + secondNumber  
+  } else if (currentOperator === '-'){
+    result = storedNumber - secondNumber
+  } else if (currentOperator === '*'){
+    result = storedNumber * secondNumber
+  } else if (currentOperator === '/'){
+    result = storedNumber / secondNumber
+  } 
+  storedNumber = result
+  currentOperator = ''
+  typedNumberText = ''
+  setStatus('done')
+  updateScreen()
+}
+  
